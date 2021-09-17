@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { ApiServer } from "./server/index";
 import { createTypeormConnection } from "./database/createTypeormConnection";
 
-export const startServer = async () => {
+export const startServer = async (): Promise<any> => {
   const server = new ApiServer();
   await createTypeormConnection();
 

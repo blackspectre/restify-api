@@ -27,7 +27,7 @@ export class CustomerController implements Controller {
   private async create(req: Request, res: Response): Promise<any> {
     const newCustomer = Customer.create({
       firstName: req.body.firstName,
-      lastName: req.body.lastName
+      lastName: req.body.lastName,
     });
 
     res.send(await newCustomer.save());

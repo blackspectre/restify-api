@@ -1,3 +1,4 @@
+import { DeleteResult } from "typeorm";
 import { Customer } from "../entity/customer";
 
 export class CustomerService {
@@ -12,18 +13,18 @@ export class CustomerService {
 
     const newCustomer = Customer.create({
       firstName: customer.firstName,
-      lastName: customer.lastName
+      lastName: customer.lastName,
     });
 
     return await Customer.save(newCustomer);
   }
 
-  async list() {
+  async list(): Promise<Customer[]> {
     const customers = await Customer.find();
     return customers;
   }
 
-  public async update(customer: Customer) {
+  public async update(customer: Customer): Promise<any> {
     const entity = await Customer.findOne(customer.id);
 
     if (!entity) {
@@ -36,10 +37,10 @@ export class CustomerService {
     }
   }
 
-  public async delete(id: number) {
+  public async delete(id: number): Promise<DeleteResult | null> {
     const entity = await Customer.findOne(id);
-
-    return await Customer.remove(entity);
+    if (entity) return await Customer.delete(id);
+    else return null;
   }
 }
 
