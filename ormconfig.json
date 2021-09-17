@@ -1,9 +1,9 @@
 { "type": "mssql",
   "host": "localhost",
-  "port": 1433,
+  "port": 1432,
   "username": "sa",
   "password": "",
-  "database": "Clinicas_4",
+  "database": "nodeapi",
   "synchronize": true,
   "logging": false,
   "options": {
