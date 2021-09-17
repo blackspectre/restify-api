@@ -1,5 +1,5 @@
-import { DeleteResult } from "typeorm";
-import { Customer } from "../entity/customer";
+import { DeleteResult } from 'typeorm';
+import { Customer } from '../entity/customer';
 
 export class CustomerService {
   public async getById(id: number): Promise<any> {
@@ -9,7 +9,7 @@ export class CustomerService {
   }
 
   async create(customer: Customer): Promise<any> {
-    console.log("i am in customerservice: ", customer);
+    console.log('i am in customerservice: ', customer);
 
     const newCustomer = Customer.create({
       firstName: customer.firstName,

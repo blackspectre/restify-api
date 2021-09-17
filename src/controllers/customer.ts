@@ -1,13 +1,13 @@
-import { Controller } from "./controller";
-import { HttpServer } from "../server/httpServer";
-import { Request, Response } from "restify";
-import { Customer } from "../entity/Customer";
+import { Controller } from './controller';
+import { HttpServer } from '../server/httpServer';
+import { Request, Response } from 'restify';
+import { Customer } from '../entity/Customer';
 
 export class CustomerController implements Controller {
   public initialize(httpServer: HttpServer): any {
-    httpServer.get("/customers", this.list.bind(this));
-    httpServer.get("/customer/:id", this.getById.bind(this));
-    httpServer.post("/customer", this.create.bind(this));
+    httpServer.get('/customers', this.list.bind(this));
+    httpServer.get('/customer/:id', this.getById.bind(this));
+    httpServer.post('/customer', this.create.bind(this));
     // httpServer.put("customer/:id", this.update.bind(this));
     // httpServer.del("customer/id", this.remove.bind(this));
   }

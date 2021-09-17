@@ -1,29 +1,25 @@
-import * as restify from "restify";
-import { RequestHandler, Server } from "restify";
-import { HttpServer } from "./httpServer";
-import { CONTROLLERS } from "../controllers";
+import * as restify from 'restify';
+import { RequestHandler, Server } from 'restify';
+import { HttpServer } from './httpServer';
+import { CONTROLLERS } from '../controllers';
 
 export class ApiServer implements HttpServer {
   private restify: Server;
 
   public get(url: string, requestHandler: RequestHandler): any {
-    this.addRoute("get", url, requestHandler);
+    this.addRoute('get', url, requestHandler);
   }
   public post(url: string, requestHandler: RequestHandler): any {
-    this.addRoute("post", url, requestHandler);
+    this.addRoute('post', url, requestHandler);
   }
   public put(url: string, requestHandler: RequestHandler): any {
-    this.addRoute("put", url, requestHandler);
+    this.addRoute('put', url, requestHandler);
   }
   public del(url: string, requestHandler: RequestHandler): any {
-    this.addRoute("del", url, requestHandler);
+    this.addRoute('del', url, requestHandler);
   }
 
-  private addRoute(
-    method: "get" | "post" | "put" | "del",
-    url: string,
-    requestHandler: RequestHandler
-  ) {
+  private addRoute(method: 'get' | 'post' | 'put' | 'del', url: string, requestHandler: RequestHandler) {
     this.restify[method](url, async (req, res, next) => {
       try {
         await requestHandler(req, res, next);
@@ -43,8 +39,6 @@ export class ApiServer implements HttpServer {
 
     CONTROLLERS.forEach((controller) => controller.initialize(this));
 
-    this.restify.listen(port, () =>
-      console.log(`Server is up and running on port ${port}`)
-    );
+    this.restify.listen(port, () => console.log(`Server is up and running on port ${port}`));
   }
 }

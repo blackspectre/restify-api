@@ -1,13 +1,13 @@
-import { Controller } from "./controller";
-import { HttpServer } from "../server/httpServer";
-import { Request, Response } from "restify";
-import { Utente } from "../entity/Utente";
+import { Controller } from './controller';
+import { HttpServer } from '../server/httpServer';
+import { Request, Response } from 'restify';
+import { Utente } from '../entity/Utente';
 
 export class UtenteController implements Controller {
   public initialize(httpServer: HttpServer): any {
-    httpServer.get("/utentes", this.list.bind(this));
-    httpServer.get("/utente/:id", this.getById.bind(this));
-    httpServer.post("/utente", this.create.bind(this));
+    httpServer.get('/utentes', this.list.bind(this));
+    httpServer.get('/utente/:id', this.getById.bind(this));
+    httpServer.post('/utente', this.create.bind(this));
     // httpServer.put("customer/:id", this.update.bind(this));
     // httpServer.del("customer/id", this.remove.bind(this));
   }
