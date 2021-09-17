@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: rest
+      POSTGRES_DB: restify
+    ports:
+      - "5432:5432"

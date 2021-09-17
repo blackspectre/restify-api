@@ -1,0 +1,27 @@
+{
+  "name": "restify-api-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "docker-build": "docker build -t my:repo/restify-api .",
+    "docker-push": "docker push my:repo/restify-api",
+    "build": "rimraf build && tsc",
+    "start-server": "node dist/index.js",
+    "start": "nodemon --exec ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@types/node": "^10.3.4",
+    "@types/restify": "^7.2.1",
+    "nodemon": "^1.17.5",
+    "mssql": "^7.2.1",
+    "reflect-metadata": "^0.1.12",
+    "restify": "^7.2.1",
+    "rimraf": "^2.6.2",
+    "ts-node": "^6.1.1",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.13.0",
+    "typeorm": "^0.2.7",
+    "typescript": "^2.9.2"
+  }
+}
