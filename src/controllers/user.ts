@@ -1,36 +1,39 @@
 import { Controller } from './controller';
 import { HttpServer } from '../server/httpServer';
 import { Request, Response } from 'restify';
-import { Utente } from '../entity/Utente';
+import { User } from '../entity/User';
 
-export class UtenteController implements Controller {
+export class UserController implements Controller {
   public initialize(httpServer: HttpServer): any {
-    httpServer.get('/utentes', this.list.bind(this));
-    httpServer.get('/utente/:id', this.getById.bind(this));
-    httpServer.post('/utente', this.create.bind(this));
+    httpServer.get('/users', this.list.bind(this));
+    httpServer.get('/user/:id', this.getById.bind(this));
+    httpServer.post('/user', this.create.bind(this));
     // httpServer.put("customer/:id", this.update.bind(this));
     // httpServer.del("customer/id", this.remove.bind(this));
   }
 
   private async list(req: Request, res: Response): Promise<any> {
-    const customers = await Utente.find();
+    const users = await User.find();
 
-    res.send(customers);
+    res.send(users);
   }
 
   private async getById(req: Request, res: Response): Promise<any> {
-    const utente = await Utente.findOne({ id: req.params.id });
+    const user = await User.findOne({ email: req.params.email });
 
-    res.send(utente ? 200 : 404, utente);
+    res.send(user ? 200 : 404, user);
   }
 
   private async create(req: Request, res: Response): Promise<any> {
-    const newUtente = Utente.create({
+    const newCustomer = User.create({
+      email: req.body.email,
+      username: req.body.username,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
+      password: req.body.password,
     });
 
-    res.send(await newUtente.save());
+    res.send(await newCustomer.save());
   }
 
   // private async update(req: Request, res: Response) {}
