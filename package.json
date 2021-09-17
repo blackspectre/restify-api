@@ -20,6 +20,7 @@
     "eslint": "^7.32.0",
     "mssql": "^7.2.1",
     "nodemon": "^1.17.5",
+    "prettier": "^2.4.1",
     "reflect-metadata": "^0.1.12",
     "restify": "^7.2.1",
     "rimraf": "^2.6.2",
