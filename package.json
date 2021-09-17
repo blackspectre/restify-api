@@ -8,13 +8,18 @@
     "docker-push": "docker push my:repo/restify-api",
     "build": "rimraf build && tsc",
     "start-server": "node dist/index.js",
-    "start": "nodemon --exec ts-node src/index.ts"
+    "start": "nodemon --exec ts-node src/index.ts",
+    "lint": "eslint src/**/*.ts",
+    "format": "eslint src/**/*.ts --fix"
   },
   "dependencies": {
     "@types/node": "^10.3.4",
     "@types/restify": "^7.2.1",
-    "nodemon": "^1.17.5",
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
+    "eslint": "^7.32.0",
     "mssql": "^7.2.1",
+    "nodemon": "^1.17.5",
     "reflect-metadata": "^0.1.12",
     "restify": "^7.2.1",
     "rimraf": "^2.6.2",
