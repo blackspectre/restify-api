@@ -13,6 +13,3 @@ Start db via docker-compose. Add `-d` to run it in the background.
 Build
 
     yarn build
-
-- [Modern Web APIs - Manuel Rauber at iJS 2017](https://www.youtube.com/watch?v=2ToXwB9NqZY)
-- [Repo](https://github.com/thinktecture/entwickler.de-nodejs-typescript)
