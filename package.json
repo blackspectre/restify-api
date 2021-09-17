@@ -19,6 +19,7 @@
     "@types/restify": "^7.2.1",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
+    "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "lint-staged": "^11.1.2",
     "mssql": "^7.2.1",
@@ -41,7 +42,6 @@
       "npm run prettier:fix",
       "npm run lint",
       "git add ."
-
     ]
   }
 }
