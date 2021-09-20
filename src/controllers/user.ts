@@ -9,7 +9,7 @@ export class UserController implements Controller {
     httpServer.get('/user/:id', this.getById.bind(this));
     httpServer.post('/user', this.create.bind(this));
     // httpServer.put("customer/:id", this.update.bind(this));
-    // httpServer.del("customer/id", this.remove.bind(this));
+    httpServer.del('/user/:email', this.remove.bind(this));
   }
 
   private async list(req: Request, res: Response): Promise<any> {
@@ -37,5 +37,15 @@ export class UserController implements Controller {
   }
 
   // private async update(req: Request, res: Response) {}
-  // private async remove(req: Request, res: Response) {}
+  private async remove(req: Request, res: Response): Promise<any> {
+    const email = req.params.email;
+    console.log(email);
+    const user = await User.findOne({ email });
+
+    console.log(user);
+    if (user) {
+      User.delete({ email: email });
+      res.send(user ? 200 : 404, 'user was deleted');
+    } else res.send(404, 'user not found');
+  }
 }
