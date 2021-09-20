@@ -13,8 +13,9 @@
     "format": "eslint src/**/*.ts --fix",
     "prepare": "husky install",
     "pre-commit": "npm test && eslint",
-    "prettier": "prettier 'src/**/*.ts'",
-    "prettier:fix": "prettier --write 'src/**/*.ts'"
+    "prettier:base": "prettier --parser typescript --config .prettierrc",
+    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
+    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@types/node": "^10.3.4",
@@ -41,8 +42,9 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
+      "npm run prettier:write",
       "npm run lint",
-      "git add ."
+      "git add"
     ]
   }
 }
