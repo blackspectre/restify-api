@@ -18,10 +18,12 @@
     "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "^10.3.4",
     "@types/restify": "^7.2.1",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "lint-staged": "^11.1.2",
