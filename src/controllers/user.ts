@@ -2,7 +2,6 @@ import { Controller } from './controller';
 import { HttpServer } from '../server/httpServer';
 import { Request, Response } from 'restify';
 import { User } from '../entity/User';
-// import BCryptPasswordEncrypt from '../utils/password-encrypt/bcrypt-password-encrypt';
 import { PasswordEncrypt } from '../utils/password-encrypt/contracts/password-encrypt';
 
 export class UserController implements Controller {
