@@ -2,10 +2,15 @@ import { Controller } from './controller';
 import { HttpServer } from '../server/httpServer';
 import { Request, Response } from 'restify';
 import { User } from '../entity/User';
-import BCryptPasswordEncrypt from '../utils/password-encrypt/bcrypt-password-encrypt';
+// import BCryptPasswordEncrypt from '../utils/password-encrypt/bcrypt-password-encrypt';
+import { PasswordEncrypt } from '../utils/password-encrypt/contracts/password-encrypt';
 
-const bcrypt = new BCryptPasswordEncrypt();
 export class UserController implements Controller {
+  private encryptPassword: PasswordEncrypt;
+  constructor(encryptPassword: PasswordEncrypt) {
+    this.encryptPassword = encryptPassword;
+  }
+
   public initialize(httpServer: HttpServer): any {
     httpServer.get('/users', this.list.bind(this));
     httpServer.get('/user/:id', this.getById.bind(this));
@@ -30,7 +35,7 @@ export class UserController implements Controller {
 
   private async create(req: Request, res: Response): Promise<any> {
     const password = req.body.password;
-    const hashedPassword = await bcrypt.hashIt(password);
+    const hashedPassword = await this.encryptPassword.hashIt(password);
 
     const newCustomer = User.create({
       email: req.body.email,
@@ -71,10 +76,10 @@ export class UserController implements Controller {
     const { oldPassword, newPassword, email } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      const isValid = await bcrypt.compareIt(oldPassword, user.password);
+      const isValid = await this.encryptPassword.compareIt(oldPassword, user.password);
 
       if (isValid) {
-        const newHashedPassword = await bcrypt.hashIt(newPassword);
+        const newHashedPassword = await this.encryptPassword.hashIt(newPassword);
 
         User.update({ email }, { password: newHashedPassword });
         res.send(200, 'password updated');
