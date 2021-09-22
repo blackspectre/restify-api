@@ -1,4 +1,4 @@
-import { PasswordEncrypt } from './contracts/password-encrypt';
+import { PasswordEncrypt } from './protocols/password-encrypt';
 import * as bcrypt from 'bcrypt';
 
 export default class BCryptPasswordEncrypt implements PasswordEncrypt {

@@ -2,7 +2,7 @@ import { Controller } from './controller';
 import { HttpServer } from '../server/httpServer';
 import { Request, Response } from 'restify';
 import { User } from '../entity/User';
-import { PasswordEncrypt } from '../utils/password-encrypt/contracts/password-encrypt';
+import { PasswordEncrypt } from '../utils/password-encrypt/protocols/password-encrypt';
 
 export class UserController implements Controller {
   private encryptPassword: PasswordEncrypt;
@@ -52,7 +52,6 @@ export class UserController implements Controller {
     const { firstName, lastName, username } = req.body;
     const user = await User.findOne({ email });
 
-    console.log(user);
     if (user) {
       const updatedUser = await User.update({ email }, { firstName, lastName, username });
       res.send(200, updatedUser);
@@ -64,7 +63,6 @@ export class UserController implements Controller {
     const { firstName, lastName, username } = req.body;
     const user = await User.findOne({ id });
 
-    console.log(user);
     if (user) {
       const updatedUser = await User.update({ id }, { firstName, lastName, username });
       res.send(200, updatedUser);
@@ -88,10 +86,8 @@ export class UserController implements Controller {
 
   private async remove(req: Request, res: Response): Promise<any> {
     const email = req.params.email;
-    console.log(email);
     const user = await User.findOne({ email });
 
-    console.log(user);
     if (user) {
       User.delete({ email: email });
       res.send(user ? 200 : 404, 'user was deleted');
