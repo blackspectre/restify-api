@@ -7,8 +7,6 @@ import { PasswordEncrypt } from '../utils/password-encrypt/protocols/password-en
 import * as jwt from 'jsonwebtoken';
 import { config } from '../../config';
 
-import { checkJwtTokenFn } from '../utils/check-token/';
-
 export class UserController implements Controller {
   private encryptPassword: PasswordEncrypt;
   constructor(encryptPassword: PasswordEncrypt) {
@@ -27,27 +25,18 @@ export class UserController implements Controller {
   }
 
   private async list(req: Request, res: Response): Promise<any> {
-    const isAuth = checkJwtTokenFn(req, res);
-    if (!isAuth) return res.send(401, 'Not authenticated');
-
     const users = await User.find();
 
     return res.send(users);
   }
 
   private async getById(req: Request, res: Response): Promise<any> {
-    const isAuth = checkJwtTokenFn(req, res);
-    if (!isAuth) return res.send(401, 'Not authenticated');
-
     const user = await User.findOne({ email: req.params.email });
 
     return res.send(user ? 200 : 404, user);
   }
 
   private async create(req: Request, res: Response): Promise<any> {
-    const isAuth = checkJwtTokenFn(req, res);
-    if (!isAuth) return res.send(401, 'Not authenticated');
-
     const password = req.body.password;
     const hashedPassword = await this.encryptPassword.hashIt(password);
 
@@ -63,9 +52,6 @@ export class UserController implements Controller {
   }
 
   private async updateByEmail(req: Request, res: Response): Promise<any> {
-    const isAuth = checkJwtTokenFn(req, res);
-    if (!isAuth) return res.send(401, 'Not authenticated');
-
     const email = req.params.email;
     const { firstName, lastName, username } = req.body;
     const user = await User.findOne({ email });
@@ -77,9 +63,6 @@ export class UserController implements Controller {
   }
 
   private async updateById(req: Request, res: Response): Promise<any> {
-    const isAuth = checkJwtTokenFn(req, res);
-    if (!isAuth) return res.send(401, 'Not authenticated');
-
     const id = req.params.id;
     const { firstName, lastName, username } = req.body;
     const user = await User.findOne({ id });
@@ -91,9 +74,6 @@ export class UserController implements Controller {
   }
 
   private async updatePassword(req: Request, res: Response): Promise<any> {
-    const isAuth = checkJwtTokenFn(req, res);
-    if (!isAuth) return res.send(401, 'Not authenticated');
-
     const { oldPassword, newPassword, email } = req.body;
     const user = await User.findOne({ email });
     if (user) {
@@ -109,9 +89,6 @@ export class UserController implements Controller {
   }
 
   private async remove(req: Request, res: Response): Promise<any> {
-    const isAuth = checkJwtTokenFn(req, res);
-    if (!isAuth) return res.send(401, 'Not authenticated');
-
     const email = req.params.email;
     const user = await User.findOne({ email });
 
