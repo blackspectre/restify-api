@@ -2,6 +2,7 @@ import * as restify from 'restify';
 import { RequestHandler, Server } from 'restify';
 import { HttpServer } from './httpServer';
 import { CONTROLLERS } from '../controllers';
+import { checkJwt } from '../utils/check-token';
 
 export class ApiServer implements HttpServer {
   private restify: Server;
@@ -36,6 +37,8 @@ export class ApiServer implements HttpServer {
     this.restify = restify.createServer();
     this.restify.use(restify.plugins.bodyParser());
     this.restify.use(restify.plugins.queryParser());
+
+    this.restify.use(checkJwt);
 
     CONTROLLERS.forEach((controller) => controller.initialize(this));
 

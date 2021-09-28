@@ -4,6 +4,9 @@ import { Request, Response } from 'restify';
 import { User } from '../entity/User';
 import { PasswordEncrypt } from '../utils/password-encrypt/protocols/password-encrypt';
 
+import * as jwt from 'jsonwebtoken';
+import { config } from '../../config';
+
 export class UserController implements Controller {
   private encryptPassword: PasswordEncrypt;
   constructor(encryptPassword: PasswordEncrypt) {
@@ -11,6 +14,7 @@ export class UserController implements Controller {
   }
 
   public initialize(httpServer: HttpServer): any {
+    httpServer.post('/authenticate', this.authenticate.bind(this));
     httpServer.get('/users', this.list.bind(this));
     httpServer.get('/user/:id', this.getById.bind(this));
     httpServer.post('/user', this.create.bind(this));
@@ -91,6 +95,22 @@ export class UserController implements Controller {
     if (user) {
       User.delete({ email: email });
       res.send(user ? 200 : 404, 'user was deleted');
+    } else res.send(404, 'user not found');
+  }
+
+  private async authenticate(req: Request, res: Response): Promise<any> {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+
+    if (user) {
+      const isValid = await this.encryptPassword.compareIt(password, user.password);
+      if (isValid) {
+        const token = jwt.sign({ username }, config.jwt.secret, {
+          expiresIn: '1h',
+        });
+
+        res.send(200, token);
+      } else res.send(404, 'invalid password');
     } else res.send(404, 'user not found');
   }
 }
