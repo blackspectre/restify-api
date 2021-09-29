@@ -46,6 +46,7 @@ export class UserController implements Controller {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       password: hashedPassword,
+      lastToken: '',
     });
 
     return res.send(await newCustomer.save());
