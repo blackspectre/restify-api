@@ -53,7 +53,10 @@ export class ApiServer implements HttpServer {
           return null;
         },
       }).unless({
-        path: ['/authenticate', '/user'],
+        path: [
+          { url: '/authenticate', methods: ['GET'] },
+          { url: '/user', methods: ['POST'] },
+        ],
       }),
     );
 
