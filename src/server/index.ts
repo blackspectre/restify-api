@@ -6,6 +6,8 @@ import { CONTROLLERS } from '../controllers';
 import * as rjwt from 'restify-jwt-community';
 import { config } from '../../config';
 
+import * as corsMiddleware from 'restify-cors-middleware';
+
 export class ApiServer implements HttpServer {
   private restify: Server;
 
@@ -40,6 +42,15 @@ export class ApiServer implements HttpServer {
     this.restify.use(restify.plugins.bodyParser());
     this.restify.use(restify.plugins.queryParser());
 
+    const cors = corsMiddleware({
+      origins: ['*'],
+      allowHeaders: ['Authorization'],
+      exposeHeaders: ['Authorization'],
+    });
+
+    this.restify.pre(cors.preflight);
+    this.restify.use(cors.actual);
+
     this.restify.use(
       rjwt({
         secret: config.jwt.secret,
@@ -54,7 +65,7 @@ export class ApiServer implements HttpServer {
         },
       }).unless({
         path: [
-          { url: '/authenticate', methods: ['GET'] },
+          { url: '/authenticate', methods: ['POST'] },
           { url: '/user', methods: ['POST'] },
         ],
       }),
